@@ -56,7 +56,7 @@ const myLibrary = [
   },
 ];
 
-addBookToLibrary("The Hobbit", "T.K. Robinson", 694, true);
+displayBooks();
 
 console.log(myLibrary);
 
@@ -77,3 +77,45 @@ function addBookToLibrary(title, author, pages, read) {
     myLibrary.push(newBook);
 }
 
+function displayBooks() {
+    // Add multiple colors for the books
+    const bookColors = [
+      '#fa4f4e', '#f6cc32', '#027f82',
+      '#f2f2f2', '#67d7f7', '#526a87',
+      '#2e4139'
+    ];
+
+    const containerElement = document.getElementById('container');
+    // Loop through the array of books and create a card element for
+    // each book.
+    myLibrary.forEach((book) => {
+        // Get random color for book.
+        let colorIndex = getRandomInt(0, 7);
+
+        let cardElement = document.createElement('div');
+        // Add a class name of card to each card element.
+        cardElement.className = "card";
+        // Add an ID atribute to the card element.
+        cardElement.id = book.id;
+        // Set the book color
+        cardElement.style.backgroundColor = bookColors[colorIndex];
+
+        if (colorIndex == 6) {
+          // Change the font color to white so it is readable.
+          cardElement.style.color = '#f1f0f0ff';
+        }
+        // Add child nodes to the card element
+        cardElement.innerHTML = `
+        <h2 class="title">${book.title}</h2>
+        <p class="author">By: <strong>${book.author}</strong></p>
+        <p class="pages">${book.pages}</p>
+        `;
+        containerElement.appendChild(cardElement);
+    });
+};
+
+function getRandomInt(min, max) {
+  const minCeiled = Math.ceil(min);
+  const maxFloored = Math.floor(max);
+  return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); // The maximum is exclusive and the minimum is inclusive
+};
